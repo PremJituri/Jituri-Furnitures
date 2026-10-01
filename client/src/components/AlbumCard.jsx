@@ -23,24 +23,34 @@ export default function AlbumCard({ album }) {
   return (
     <Link
       to={`/album/${album.slug}`}
-      className="group overflow-hidden rounded-2xl bg-white shadow-lg shadow-blue-500/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/15"
+      className="group flex flex-col justify-between overflow-hidden rounded-[4px] border border-[#D3E2F0] bg-[#FFFFFF] shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-[#0B1B2B]/30"
     >
-      <div className="aspect-[4/3] overflow-hidden bg-surface">
-        <img
-          src={cover}
-          alt={album.name ? `${album.name} collection` : 'Album cover'}
-          className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
+      <div>
+        <div className="aspect-[4/3] overflow-hidden bg-[#F4F8FC] border-b border-[#D3E2F0]">
+          <img
+            src={cover}
+            alt={album.name ? `${album.name} collection` : 'Album cover'}
+            className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-102"
+            loading="lazy"
+          />
+        </div>
+        <div className="p-6">
+          <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-[#4A5D73]">
+            Curated Album
+          </span>
+          <h2 className="mt-1.5 text-lg font-semibold tracking-[-0.02em] text-[#0B1B2B]">
+            {album.name}
+          </h2>
+          {album.description && (
+            <p className="mt-2 line-clamp-2 text-sm text-[#4A5D73] leading-[1.6]">
+              {album.description}
+            </p>
+          )}
+        </div>
       </div>
-      <div className="p-5">
-        <h2 className="text-lg font-semibold text-dark group-hover:text-primary">{album.name}</h2>
-        {album.description && (
-          <p className="mt-2 line-clamp-2 text-sm text-dark/65">{album.description}</p>
-        )}
-        <span className="mt-3 inline-flex items-center text-sm font-medium text-accent">
-          View album
-          <span className="ml-1 transition-transform group-hover:translate-x-0.5">→</span>
+      <div className="border-t border-[#D3E2F0] px-6 py-4">
+        <span className="inline-flex items-center text-sm font-semibold text-[#0B1B2B] transition-transform group-hover:translate-x-1">
+          View Collection Album →
         </span>
       </div>
     </Link>
