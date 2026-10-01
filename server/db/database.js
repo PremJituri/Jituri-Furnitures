@@ -1,13 +1,19 @@
 import initSqlJs from 'sql.js';
 import { readFileSync, writeFileSync, copyFileSync, renameSync, existsSync, mkdirSync } from 'fs';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
-const dataDir = join(rootDir, 'data');
-const dbPath = join(dataDir, 'app.db');
+
+function getDataDir() {
+  return process.env.DATA_DIR ? resolve(process.env.DATA_DIR) : join(rootDir, 'data');
+}
+
+function getDbPath() {
+  return join(getDataDir(), 'app.db');
+}
 
 let sqlJsFactory = null;
 
@@ -19,6 +25,8 @@ async function getSqlJs() {
 }
 
 export function backupDb() {
+  const dbPath = getDbPath();
+  const dataDir = getDataDir();
   if (existsSync(dbPath)) {
     const backupPath = join(dataDir, 'app.db.bak');
     copyFileSync(dbPath, backupPath);
@@ -28,6 +36,7 @@ export function backupDb() {
 }
 
 function persist(db) {
+  const dbPath = getDbPath();
   const data = db.export();
   // sql.js resets PRAGMA foreign_keys to 0 on db.export(), so restore it immediately
   db.exec('PRAGMA foreign_keys = ON;');
@@ -122,6 +131,8 @@ function seedIfNeeded(dbWrapped) {
 
 export async function getDb() {
   const SQL = await getSqlJs();
+  const dataDir = getDataDir();
+  const dbPath = getDbPath();
   if (!existsSync(dataDir)) {
     mkdirSync(dataDir, { recursive: true });
   }

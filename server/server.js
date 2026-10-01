@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { mkdirSync, existsSync } from 'fs';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { getDb } from './db/database.js';
 import { createAuthRouter } from './routes/auth.js';
@@ -10,8 +10,6 @@ import { createImagesRouter } from './routes/images.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
-const uploadsDir = join(__dirname, 'uploads');
-const dataDir = join(__dirname, 'data');
 
 // Load .env automatically if present (native Node.js 20.12+ / 24+)
 if (typeof process.loadEnvFile === 'function') {
@@ -25,6 +23,9 @@ if (typeof process.loadEnvFile === 'function') {
     }
   }
 }
+
+const uploadsDir = process.env.UPLOADS_DIR ? resolve(process.env.UPLOADS_DIR) : join(__dirname, 'uploads');
+const dataDir = process.env.DATA_DIR ? resolve(process.env.DATA_DIR) : join(__dirname, 'data');
 
 for (const dir of [dataDir, uploadsDir]) {
   if (!existsSync(dir)) {
