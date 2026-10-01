@@ -27,7 +27,7 @@ export default function ImageModal({ images, index, onClose, onPrev, onNext }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-dark/90 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111]/95 p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label="Image preview"
@@ -38,20 +38,37 @@ export default function ImageModal({ images, index, onClose, onPrev, onNext }) {
         aria-label="Close"
         onClick={onClose}
       />
-      <div className="relative z-10 flex max-h-[90vh] max-w-5xl flex-col items-center">
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute -top-12 right-0 rounded-lg bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20"
-        >
-          Close
-        </button>
-        <img
-          src={current.url}
-          alt={current.original_name || 'Catalog image'}
-          className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
-        />
-        <div className="mt-4 flex w-full items-center justify-between gap-4">
+      <div className="relative z-10 flex max-h-[92vh] max-w-5xl w-full flex-col items-center">
+        {/* Top Control Bar */}
+        <div className="mb-3 flex w-full items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-[#5BBBF7] px-2.5 py-0.5 text-xs font-bold text-[#0B1B2B]">
+              {index + 1} / {images.length}
+            </span>
+            <span className="text-xs font-medium text-white/80">
+              Photograph Preview
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-[2px] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0B1B2B] transition-opacity hover:opacity-90"
+          >
+            Close ✕
+          </button>
+        </div>
+
+        {/* Main Image */}
+        <div className="relative flex max-h-[80vh] w-full items-center justify-center overflow-hidden rounded-[2px] border border-white/10 bg-black/40">
+          <img
+            src={current.url}
+            alt="Furniture showcase item"
+            className="max-h-[78vh] max-w-full object-contain"
+          />
+        </div>
+
+        {/* Bottom Pagination Controls */}
+        <div className="mt-3 flex w-full items-center justify-between gap-4">
           <button
             type="button"
             disabled={!hasPrev}
@@ -59,13 +76,13 @@ export default function ImageModal({ images, index, onClose, onPrev, onNext }) {
               e.stopPropagation();
               onPrev();
             }}
-            className="rounded-xl bg-white/15 px-5 py-3 text-sm font-semibold text-white transition-all disabled:opacity-30 hover:bg-white/25"
+            className="rounded-[2px] border border-white/20 bg-white/10 px-5 py-2 text-xs font-medium text-white transition-all hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-25"
           >
-            Previous
+            ← Previous
           </button>
-          <span className="text-sm text-white/80">
-            {index + 1} / {images.length}
-          </span>
+          <div className="hidden sm:block text-xs text-white/60">
+            Use arrow keys or buttons to navigate
+          </div>
           <button
             type="button"
             disabled={!hasNext}
@@ -73,9 +90,9 @@ export default function ImageModal({ images, index, onClose, onPrev, onNext }) {
               e.stopPropagation();
               onNext();
             }}
-            className="rounded-xl bg-white/15 px-5 py-3 text-sm font-semibold text-white transition-all disabled:opacity-30 hover:bg-white/25"
+            className="rounded-[2px] border border-white/20 bg-white/10 px-5 py-2 text-xs font-medium text-white transition-all hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-25"
           >
-            Next
+            Next →
           </button>
         </div>
       </div>

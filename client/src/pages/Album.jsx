@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../api.js';
 import ImageModal from '../components/ImageModal.jsx';
@@ -8,7 +8,6 @@ export default function Album() {
   const [album, setAlbum] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState('');
   const [modalIndex, setModalIndex] = useState(null);
 
   useEffect(() => {
@@ -29,94 +28,103 @@ export default function Album() {
     };
   }, [slug]);
 
-  const filtered = useMemo(() => {
-    if (!album?.images) return [];
-    const q = query.trim().toLowerCase();
-    if (!q) return album.images;
-    return album.images.filter((img) => {
-      const name = (img.original_name || img.filename || '').toLowerCase();
-      return name.includes(q);
-    });
-  }, [album, query]);
+  const images = album?.images || [];
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-20 text-center text-dark/60 sm:px-6">Loading album…</div>
+      <div className="mx-auto max-w-[1200px] px-4 py-24 text-center">
+        <div className="inline-block h-8 w-8 animate-spin rounded-full border-2 border-[#0B1B2B] border-t-transparent" />
+        <p className="mt-4 text-sm font-medium text-[#4A5D73]">Loading album…</p>
+      </div>
     );
   }
 
   if (error || !album) {
     return (
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <p className="text-center text-red-600">{error || 'Album not found'}</p>
-        <p className="mt-6 text-center">
-          <Link to="/collections" className="font-medium text-primary hover:underline">
-            Back to collections
-          </Link>
-        </p>
+      <div className="mx-auto max-w-[1200px] px-4 py-24 text-center">
+        <div className="mx-auto max-w-md rounded-[4px] border border-red-200 bg-red-50 p-8">
+          <p className="font-semibold text-red-700">{error || 'Album not found'}</p>
+          <div className="mt-6">
+            <Link
+              to="/collections"
+              className="inline-block rounded-[2px] bg-[#0B1B2B] px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+            >
+              ← Back to collections
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-      <nav className="text-sm text-dark/55">
-        <Link to="/collections" className="hover:text-primary">
-          Collections
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-dark">{album.name}</span>
-      </nav>
-      <h1 className="mt-4 text-4xl font-bold text-dark">{album.name}</h1>
-      {album.description && <p className="mt-3 max-w-2xl text-dark/70">{album.description}</p>}
-
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <label className="block w-full max-w-md">
-          <span className="sr-only">Search images</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by file name…"
-            className="w-full rounded-2xl border border-dark/10 bg-white px-4 py-3 text-dark shadow-sm outline-none ring-primary/30 transition-all placeholder:text-dark/40 focus:ring-2"
-          />
-        </label>
-        <p className="text-sm text-dark/55">
-          {filtered.length} image{filtered.length === 1 ? '' : 's'}
-        </p>
-      </div>
-
-      {filtered.length === 0 ? (
-        <p className="mt-12 text-center text-dark/55">No images match your search.</p>
-      ) : (
-        <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
-          {filtered.map((img, i) => (
-            <button
-              key={img.id}
-              type="button"
-              onClick={() => setModalIndex(i)}
-              className="mb-4 block w-full break-inside-avoid overflow-hidden rounded-2xl bg-white text-left shadow-lg shadow-blue-500/10 transition-all duration-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary/40"
-            >
-              <img
-                src={img.url}
-                alt={img.original_name || ''}
-                className="w-full object-cover"
-                loading="lazy"
-              />
-            </button>
-          ))}
+    <div className="min-h-screen bg-[#FFFFFF]">
+      {/* Header Banner (--bg-sage) */}
+      <section className="border-b border-[#D3E2F0] bg-[#EEF5FC] -mt-[92px] md:-mt-[108px] pt-[116px] md:pt-[140px] pb-12 md:pb-16">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+          <nav className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#4A5D73]">
+            <Link to="/collections" className="hover:text-[#0B1B2B] transition-colors">
+              Collections
+            </Link>
+            <span>/</span>
+            <span className="text-[#0B1B2B]">{album.name}</span>
+          </nav>
+          <h1 className="editorial-h1 mt-4">{album.name}</h1>
+          {album.description && (
+            <p className="editorial-body mt-4 max-w-2xl">{album.description}</p>
+          )}
         </div>
-      )}
+      </section>
 
-      {modalIndex !== null && filtered.length > 0 && (
-        <ImageModal
-          images={filtered}
-          index={modalIndex}
-          onClose={() => setModalIndex(null)}
-          onPrev={() => setModalIndex((i) => Math.max(0, i - 1))}
-          onNext={() => setModalIndex((i) => Math.min(filtered.length - 1, i + 1))}
-        />
-      )}
+      {/* Gallery Header & Image Grid */}
+      <main className="mx-auto max-w-[1200px] px-4 py-12 sm:px-6 sm:py-16">
+        <div className="flex items-center justify-between border-b border-[#D3E2F0] pb-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#4A5D73]">
+            Curated Gallery
+          </p>
+          <span className="rounded-full bg-[#EEF5FC] px-3.5 py-1 text-xs font-semibold text-[#0B1B2B] border border-[#D3E2F0]">
+            {images.length} {images.length === 1 ? 'Photograph' : 'Photographs'}
+          </span>
+        </div>
+
+        {images.length === 0 ? (
+          <div className="py-20 text-center">
+            <p className="text-sm font-medium text-[#4A5D73]">
+              No photographs in this collection yet.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-10 columns-1 gap-6 sm:columns-2 lg:columns-3">
+            {images.map((img, i) => (
+              <button
+                key={img.id}
+                type="button"
+                onClick={() => setModalIndex(i)}
+                className="group mb-6 block w-full break-inside-avoid overflow-hidden rounded-[4px] border border-[#D3E2F0] bg-[#FFFFFF] text-left shadow-soft transition-all duration-200 hover:-translate-y-1 hover:border-[#0B1B2B]/40 focus:outline-none focus:ring-2 focus:ring-[#0B1B2B]"
+              >
+                <div className="overflow-hidden bg-[#F4F8FC]">
+                  <img
+                    src={img.url}
+                    alt={album.name ? `${album.name} photograph ${i + 1}` : 'Furniture photograph'}
+                    className="w-full object-cover transition-transform duration-500 group-hover:scale-102"
+                    loading="lazy"
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {modalIndex !== null && images.length > 0 && (
+          <ImageModal
+            images={images}
+            index={modalIndex}
+            onClose={() => setModalIndex(null)}
+            onPrev={() => setModalIndex((i) => Math.max(0, i - 1))}
+            onNext={() => setModalIndex((i) => Math.min(images.length - 1, i + 1))}
+          />
+        )}
+      </main>
     </div>
   );
 }
