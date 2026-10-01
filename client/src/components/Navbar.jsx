@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   Activity,
   Component,
@@ -13,6 +13,7 @@ import { AppleStyleDock } from './AppleStyleDock.jsx';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -21,7 +22,7 @@ export default function Navbar() {
   const scrollToSection = (id) => {
     setMobileMenuOpen(false);
     if (!isHome) {
-      window.location.href = `/#${id}`;
+      navigate(`/#${id}`);
       return;
     }
     const elem = document.getElementById(id);
@@ -44,6 +45,8 @@ export default function Navbar() {
               <img
                 src="/jf-logo.png"
                 alt="Jituri Furnitures"
+                width="22"
+                height="22"
                 className="h-[22px] w-[22px] object-contain"
               />
             </div>

@@ -1,7 +1,54 @@
+# Dependencies
 node_modules/
-server/data/
-server/uploads/
-client/dist/
+client/node_modules/
+server/node_modules/
+
+# Environment files
 .env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+client/.env
+client/.env.*
+!client/.env.example
+
+# Runtime databases & state
+server/data/
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Uploaded user media
+server/uploads/
+
+# Build outputs
+dist/
+client/dist/
+build/
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor & OS artifacts
 .DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+
+# Temporary files
+tmp/
+temp/

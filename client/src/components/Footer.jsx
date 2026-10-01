@@ -12,6 +12,8 @@ export default function Footer() {
                 <img
                   src="/jf-logo.png"
                   alt="Jituri Furnitures"
+                  width="22"
+                  height="22"
                   className="h-[22px] w-[22px] object-contain"
                 />
               </div>
@@ -53,14 +55,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="/#legacy" className="text-[#4A5D73] transition-colors hover:text-[#0B1B2B]">
+                <Link to="/#legacy" className="text-[#4A5D73] transition-colors hover:text-[#0B1B2B]">
                   In-House Craftsmanship
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#process" className="text-[#4A5D73] transition-colors hover:text-[#0B1B2B]">
+                <Link to="/#process" className="text-[#4A5D73] transition-colors hover:text-[#0B1B2B]">
                   6-Step Process
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to="/login" className="text-[#4A5D73] transition-colors hover:text-[#0B1B2B]">

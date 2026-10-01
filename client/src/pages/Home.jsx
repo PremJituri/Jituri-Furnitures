@@ -18,7 +18,6 @@ export default function Home() {
   // Tab state for Section 3
   const [activeTab, setActiveTab] = useState('residential');
 
-
   // Section 2 Accordion items
   const legacyAccordionItems = [
     {
@@ -506,7 +505,7 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          SECTION 4: FACTORY LOCATION, MAP & CONTACT DETAILS (#FFFFFF)
+          SECTION 5: FACTORY LOCATION, MAP & CONTACT DETAILS (#FFFFFF)
           ========================================================================= */}
       <section id="contact" className="bg-[#FFFFFF] py-20 md:py-28">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
@@ -599,7 +598,7 @@ export default function Home() {
                 </h3>
                 <p className="mt-2 text-sm text-[#4A5D73] leading-[1.6]">
                   Direct Phone:{' '}
-                  <a href="tel:+919448112345" className="font-semibold text-[#0B1B2B] hover:underline">
+                  <a href="tel:+919845258760" className="font-semibold text-[#0B1B2B] hover:underline">
                     +91 98452 58760
                   </a>
                 </p>
@@ -609,7 +608,7 @@ export default function Home() {
               </div>
               <div className="mt-6 border-t border-[#D3E2F0] pt-4">
                 <a
-                  href="tel:+919448112345"
+                  href="tel:+919845258760"
                   className="inline-flex items-center text-xs font-semibold text-[#0B1B2B] hover:underline"
                 >
                   Call +91 98452 58760 →
@@ -655,7 +654,7 @@ export default function Home() {
                 <strong className="text-[#0B1B2B]">Landmark:</strong> Situated behind Sukh-Shanti Hotel on Khanapur Road. Dedicated customer parking available on-site.
               </p>
               <div className="flex items-center gap-4 font-medium text-[#0B1B2B]">
-                <a href="tel:+919448112345" className="hover:underline">
+                <a href="tel:+919845258760" className="hover:underline">
                   +91 98452 58760
                 </a>
                 <span>•</span>
