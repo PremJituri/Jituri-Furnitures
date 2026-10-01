@@ -18,7 +18,6 @@ export default function Home() {
   // Tab state for Section 3
   const [activeTab, setActiveTab] = useState('residential');
 
-
   // Section 2 Accordion items
   const legacyAccordionItems = [
     {
@@ -49,8 +48,8 @@ export default function Home() {
       {
         title: 'Custom Sofas & Lounge Seating',
         tag: 'Living Space',
-        p1: 'Solid seasoned timber frames combined with multi-density ergonomic foams engineered for lasting shape retention and balanced lumbar support.',
-        p2: 'Tailored in high-abrasion stain-resistant jacquards, Belgian linens, or top-grain leatherette designed for everyday family warmth.',
+        p1: 'Solid seasoned frames combined with multi-density ergonomic foams engineered for lasting shape retention and balanced lumbar support.',
+        p2: 'Tailored in high-abrasion stain-resistant leatherette designed for everyday family warmth.',
         linkText: 'Check Details →',
         href: '/collections',
       },
@@ -65,7 +64,7 @@ export default function Home() {
       {
         title: 'Solid Wood Dining & Benches',
         tag: 'Dining & Gathering',
-        p1: 'Artisan-jointed dining tables carved from single timber slabs or seasoned hardwoods, paired with ergonomically contoured dining chairs.',
+        p1: 'Artisan-jointed dining tables carved from seasoned hardwoods, paired with ergonomically contoured dining chairs.',
         p2: 'Heat-resistant, spill-safe protective hand finishes designed to endure everyday family meals and festive banquets for decades.',
         linkText: 'Check Details →',
         href: '/collections',
@@ -97,32 +96,6 @@ export default function Home() {
         href: '/collections',
       },
     ],
-    bespoke: [
-      {
-        title: 'Custom Millwork & Wall Paneling',
-        tag: 'Architectural Woodwork',
-        p1: 'Site-measured fluted timber wall slats, acoustic wood paneling, and bespoke TV credenza backdrops built to exact architectural elevations.',
-        p2: 'Crafted in-house and pre-assembled at our factory to ensure rapid, dust-free on-site installation at your residence.',
-        linkText: 'Check Details →',
-        href: '/collections',
-      },
-      {
-        title: 'Heritage Restoration & Replication',
-        tag: 'Specialty Woodcraft',
-        p1: 'Painstaking structural restoration, re-upholstery, and traditional French polishing for heirloom vintage pieces and ancestral teak furniture.',
-        p2: 'Preserving authentic historical details and patinas while reinforcing the internal framework with modern durability standards.',
-        linkText: 'Check Details →',
-        href: '/collections',
-      },
-      {
-        title: 'Bespoke Bar Units & Display Credenzas',
-        tag: 'Entertaining',
-        p1: 'Custom bar cabinets with soft-close brass hardware, tinted glass displays, integrated ambient warm lighting, and stemware racks.',
-        p2: 'Hand-finished in rich walnut, dark ebony, or natural teak tones tailored to become the centerpiece of your home entertaining zone.',
-        linkText: 'Check Details →',
-        href: '/collections',
-      },
-    ],
   };
 
   // Section 4: 6-Step Process
@@ -134,8 +107,8 @@ export default function Home() {
     },
     {
       step: '2',
-      title: 'Timber & Textile Selection',
-      desc: 'Clients choose from seasoned solid hardwoods and tested high-rub commercial upholstery fabrics with tactile finish samples.',
+      title: 'Wood Polish & Textile Selection',
+      desc: 'Clients choose from wood polish and tested high-rub commercial upholstery fabrics with tactile finish samples.',
     },
     {
       step: '3',
@@ -150,12 +123,12 @@ export default function Home() {
     {
       step: '5',
       title: 'Multi-Stage Hand Polishing',
-      desc: 'Rigorous multi-grit sanding followed by stain application and protective eco-friendly clear coats highlights natural timber grains.',
+      desc: 'Rigorous multi-grit sanding followed by stain application and protective clear coats highlights natural wood grains.',
     },
     {
       step: '6',
       title: 'Factory Inspection & White-Glove Setup',
-      desc: 'Comprehensive quality verification at our Belagavi facility before careful transport, direct placement, and on-site positioning.',
+      desc: 'Comprehensive quality verification at our facility before careful transport, direct placement, and on-site positioning.',
     },
   ];
 
@@ -167,19 +140,19 @@ export default function Home() {
     },
     {
       q: 'Where is your factory located and can clients visit during production?',
-      a: 'Our factory and showroom are located at Bhatia compound, Khanapur Rd, behind Sukh-Shanti Hotel, Mahveer Nagar, Belagavi, Karnataka 590008. We warmly encourage visitors to stop by between 10:00 AM and 8:00 PM to see our woodworking, cushioning, and polishing units in live operation.',
+      a: 'Our factory and showroom are located at Bhatia compound, Khanapur Rd, behind Sukh-Shanti Hotel, Mahveer Nagar, Belagavi, Karnataka 590008. We warmly encourage visitors to stop by between 10:00 AM and 6:00 PM to see our woodworking, cushioning, and polishing units in live operation.',
     },
     {
       q: 'Do you undertake large commercial orders for hotels and resorts?',
-      a: 'Yes. With over 21 years of experience, we have successfully furnished more than 30 commercial hotels, luxury homestays, and fine-dining restaurants across Belagavi, Hubballi, Dharwad, Goa, and Maharashtra. We offer specialized commercial pricing and strict milestone schedules.',
+      a: 'Yes. With over 21 years of experience, we have successfully furnished more than 30 commercial hotels, luxury homestays, and fine-dining restaurants across Belagavi, Hubballi, Dharwad, Bengaluru, Goa, and Maharashtra. We offer specialized commercial pricing and strict milestone schedules.',
     },
     {
       q: 'What types of wood and materials do you use for construction?',
-      a: 'We strictly utilize well-seasoned solid hardwoods, genuine teak, and premium-grade structural marine plywood for internal framing. For cushioning, we rely on certified high-resilience ergonomic foams, paired with stain-resistant commercial woven fabrics, linens, and durable leatherettes.',
+      a: 'We strictly utilize well-seasoned solid hardwoods, and premium-grade plywood for internal framing. For cushioning, we rely on certified high-resilience ergonomic foams, paired with abrasion-resistant commercial woven fabrics, linens, and durable leatherettes.',
     },
     {
       q: 'What is the standard production timeline for custom orders?',
-      a: 'Single residential pieces generally require 2 to 3 weeks from design confirmation to final polishing. Complete residence packages typically take 4 to 6 weeks, while commercial hospitality schedules are aligned with your property handover dates.',
+      a: 'Single residential pieces generally require 2 to 3 weeks from design confirmation to final polishing. Complete residence packages typically take 4 to 6 weeks, while commercial hospitality schedules are aligned with your property handover dates. These timelines may vary depending on the order timing, especially during high-demand festive periods.',
     },
   ];
 
@@ -454,17 +427,6 @@ export default function Home() {
               >
                 Hotels & Commercial
               </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('bespoke')}
-                className={`rounded-full px-5 py-2 text-xs sm:text-sm font-semibold transition-all ${
-                  activeTab === 'bespoke'
-                    ? 'bg-[#0B1B2B] text-white shadow-sm'
-                    : 'text-[#4A5D73] hover:text-[#0B1B2B]'
-                }`}
-              >
-                Bespoke Joinery
-              </button>
             </div>
           </div>
 
@@ -543,7 +505,7 @@ export default function Home() {
       </section>
 
       {/* =========================================================================
-          SECTION 4: FACTORY LOCATION, MAP & CONTACT DETAILS (#FFFFFF)
+          SECTION 5: FACTORY LOCATION, MAP & CONTACT DETAILS (#FFFFFF)
           ========================================================================= */}
       <section id="contact" className="bg-[#FFFFFF] py-20 md:py-28">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
@@ -607,10 +569,10 @@ export default function Home() {
                   Visiting & Consultation
                 </h3>
                 <p className="mt-2 text-sm text-[#4A5D73] leading-[1.6]">
-                  Monday – Saturday: <strong className="text-[#0B1B2B]">10:00 AM – 8:00 PM</strong>
+                  Monday – Saturday: <strong className="text-[#0B1B2B]">10:00 AM – 6:00 PM</strong>
                 </p>
                 <p className="mt-1 text-xs text-[#4A5D73]">
-                  Walk-ins welcome for personal timber inspections and custom orders. Sunday by appointment.
+                  Walk-ins welcome for personal wood inspections and custom orders. Sunday by appointment.
                 </p>
               </div>
               <div className="mt-6 border-t border-[#D3E2F0] pt-4">
@@ -636,8 +598,8 @@ export default function Home() {
                 </h3>
                 <p className="mt-2 text-sm text-[#4A5D73] leading-[1.6]">
                   Direct Phone:{' '}
-                  <a href="tel:+919448112345" className="font-semibold text-[#0B1B2B] hover:underline">
-                    +91 94481 12345
+                  <a href="tel:+919845258760" className="font-semibold text-[#0B1B2B] hover:underline">
+                    +91 98452 58760
                   </a>
                 </p>
                 <p className="mt-1 text-xs text-[#4A5D73]">
@@ -646,10 +608,10 @@ export default function Home() {
               </div>
               <div className="mt-6 border-t border-[#D3E2F0] pt-4">
                 <a
-                  href="tel:+919448112345"
+                  href="tel:+919845258760"
                   className="inline-flex items-center text-xs font-semibold text-[#0B1B2B] hover:underline"
                 >
-                  Call +91 94481 12345 →
+                  Call +91 98452 58760 →
                 </a>
               </div>
             </div>
@@ -692,8 +654,8 @@ export default function Home() {
                 <strong className="text-[#0B1B2B]">Landmark:</strong> Situated behind Sukh-Shanti Hotel on Khanapur Road. Dedicated customer parking available on-site.
               </p>
               <div className="flex items-center gap-4 font-medium text-[#0B1B2B]">
-                <a href="tel:+919448112345" className="hover:underline">
-                  +91 94481 12345
+                <a href="tel:+919845258760" className="hover:underline">
+                  +91 98452 58760
                 </a>
                 <span>•</span>
                 <span className="text-[#4A5D73]">Mon – Sat: 10 AM – 8 PM</span>

@@ -28,6 +28,17 @@ export default function Album() {
     };
   }, [slug]);
 
+  useEffect(() => {
+    if (album?.name) {
+      document.title = `${album.name} Collection — Jituri Furnitures`;
+    } else {
+      document.title = 'Jituri Furnitures — Handcrafted Enduring Furniture | Belagavi';
+    }
+    return () => {
+      document.title = 'Jituri Furnitures — Handcrafted Enduring Furniture | Belagavi';
+    };
+  }, [album?.name]);
+
   const images = album?.images || [];
 
   if (loading) {
@@ -62,12 +73,18 @@ export default function Album() {
       {/* Header Banner (--bg-sage) */}
       <section className="border-b border-[#D3E2F0] bg-[#EEF5FC] -mt-[92px] md:-mt-[108px] pt-[116px] md:pt-[140px] pb-12 md:pb-16">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-          <nav className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#4A5D73]">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#4A5D73]">
+            <Link to="/" className="hover:text-[#0B1B2B] transition-colors">
+              Home
+            </Link>
+            <span>/</span>
             <Link to="/collections" className="hover:text-[#0B1B2B] transition-colors">
               Collections
             </Link>
             <span>/</span>
-            <span className="text-[#0B1B2B]">{album.name}</span>
+            <span className="text-[#0B1B2B] truncate max-w-[200px] sm:max-w-none" aria-current="page">
+              {album.name}
+            </span>
           </nav>
           <h1 className="editorial-h1 mt-4">{album.name}</h1>
           {album.description && (

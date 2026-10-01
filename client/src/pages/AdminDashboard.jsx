@@ -61,7 +61,7 @@ export default function AdminDashboard() {
     setRenameValue(selectedAlbum.name);
     loadAlbumDetail(selectedAlbum.slug);
     setSelectedIds(new Set());
-  }, [selectedId, selectedAlbum?.slug, loadAlbumDetail, selectedAlbum]);
+  }, [selectedId, selectedAlbum?.slug, loadAlbumDetail]);
 
   async function handleCreateAlbum(e) {
     e.preventDefault();

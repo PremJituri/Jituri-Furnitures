@@ -1,5 +1,5 @@
 import initSqlJs from 'sql.js';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, copyFileSync, renameSync, existsSync, mkdirSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
@@ -18,9 +18,28 @@ async function getSqlJs() {
   return sqlJsFactory;
 }
 
+export function backupDb() {
+  if (existsSync(dbPath)) {
+    const backupPath = join(dataDir, 'app.db.bak');
+    copyFileSync(dbPath, backupPath);
+    return backupPath;
+  }
+  return null;
+}
+
 function persist(db) {
   const data = db.export();
-  writeFileSync(dbPath, Buffer.from(data));
+  // sql.js resets PRAGMA foreign_keys to 0 on db.export(), so restore it immediately
+  db.exec('PRAGMA foreign_keys = ON;');
+  const tmpPath = `${dbPath}.tmp`;
+  const buf = Buffer.from(data);
+  try {
+    writeFileSync(tmpPath, buf);
+    renameSync(tmpPath, dbPath);
+  } catch {
+    // Windows file-lock fallback (e.g. transient scanner or handle contention)
+    writeFileSync(dbPath, buf);
+  }
 }
 
 function normalizeParams(params) {
@@ -31,6 +50,10 @@ function normalizeParams(params) {
 
 function wrap(db, persistFn) {
   return {
+    exec(sql) {
+      db.exec(sql);
+      persistFn();
+    },
     prepare(sql) {
       return {
         run(...params) {
@@ -70,24 +93,30 @@ function wrap(db, persistFn) {
 }
 
 function seedIfNeeded(dbWrapped) {
-  const row = dbWrapped.prepare('SELECT COUNT(*) as c FROM admin').get();
-  const adminCount = row ? row.c : 0;
+  const adminRow = dbWrapped.prepare('SELECT COUNT(*) as c FROM admin').get();
+  const adminCount = adminRow ? adminRow.c : 0;
   if (adminCount === 0) {
-    const hash = bcrypt.hashSync('adminJituri9845258760', 10);
-    dbWrapped.prepare('INSERT INTO admin (username, password) VALUES (?, ?)').run('adminJituri', hash);
+    const initialUser = process.env.INITIAL_ADMIN_USERNAME || 'adminJituri';
+    const initialPass = process.env.INITIAL_ADMIN_PASSWORD || 'adminJituri9845258760';
+    const hash = bcrypt.hashSync(initialPass, 10);
+    dbWrapped.prepare('INSERT INTO admin (username, password) VALUES (?, ?)').run(initialUser, hash);
   }
 
-  const albumRows = [
-    { name: 'Sofa', slug: 'sofa', description: 'Comfortable sofas for your living space.' },
-    { name: 'Bed', slug: 'bed', description: 'Quality beds for restful sleep.' },
-    { name: 'Dining', slug: 'dining', description: 'Dining tables and chairs.' },
-  ];
+  const albumRow = dbWrapped.prepare('SELECT COUNT(*) as c FROM albums').get();
+  const albumCount = albumRow ? albumRow.c : 0;
+  if (albumCount === 0) {
+    const albumRows = [
+      { name: 'Sofa', slug: 'sofa', description: 'Comfortable sofas for your living space.' },
+      { name: 'Bed', slug: 'bed', description: 'Quality beds for restful sleep.' },
+      { name: 'Dining', slug: 'dining', description: 'Dining tables and chairs.' },
+    ];
 
-  const insertAlbum = dbWrapped.prepare(
-    'INSERT OR IGNORE INTO albums (name, slug, description) VALUES (?, ?, ?)'
-  );
-  for (const a of albumRows) {
-    insertAlbum.run(a.name, a.slug, a.description);
+    const insertAlbum = dbWrapped.prepare(
+      'INSERT OR IGNORE INTO albums (name, slug, description) VALUES (?, ?, ?)'
+    );
+    for (const a of albumRows) {
+      insertAlbum.run(a.name, a.slug, a.description);
+    }
   }
 }
 
@@ -99,13 +128,20 @@ export async function getDb() {
 
   let db;
   if (existsSync(dbPath)) {
+    // Automatically create a pre-run backup of the database before opening
+    try {
+      backupDb();
+    } catch {
+      /* ignore backup creation error */
+    }
     const fileBuffer = readFileSync(dbPath);
     db = new SQL.Database(fileBuffer);
   } else {
     db = new SQL.Database();
   }
 
-  db.run('PRAGMA foreign_keys = ON');
+  // Strictly enable foreign key constraints via exec
+  db.exec('PRAGMA foreign_keys = ON;');
 
   const schema = readFileSync(join(__dirname, 'schema.sql'), 'utf8');
   db.exec(schema);
@@ -117,3 +153,4 @@ export async function getDb() {
 
   return wrapped;
 }
+

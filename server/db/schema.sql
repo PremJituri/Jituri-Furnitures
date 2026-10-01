@@ -21,3 +21,8 @@ CREATE TABLE IF NOT EXISTS admin (
   username TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL
 );
+
+CREATE INDEX IF NOT EXISTS idx_images_album_id ON images(album_id);
+CREATE INDEX IF NOT EXISTS idx_images_filename ON images(filename);
+CREATE INDEX IF NOT EXISTS idx_albums_slug ON albums(slug);
+

@@ -63,12 +63,10 @@ export function AppleStyleDock({
     if (item.title === 'Home' || item.href === '/') {
       if (location.pathname === '/') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         navigate('/');
         setTimeout(() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
         }, 50);
       }
       return;
