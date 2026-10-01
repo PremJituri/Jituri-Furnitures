@@ -79,8 +79,8 @@ export default function Footer() {
               <p className="font-medium text-[#0B1B2B]">Bhatia compound, Khanapur Rd</p>
               <p>Behind Sukh-Shanti Hotel, Mahveer Nagar</p>
               <p>Belagavi, Karnataka 590008</p>
-              <p className="pt-2 text-xs text-[#4A5D73]">Mon – Sat: 10:00 AM – 8:00 PM</p>
-              <p className="text-xs font-medium text-[#0B1B2B]">Phone: +91 94481 12345</p>
+              <p className="pt-2 text-xs text-[#4A5D73]">Mon – Sat: 10:00 AM – 6:00 PM</p>
+              <p className="text-xs font-medium text-[#0B1B2B]">Phone: +91 98452 58760</p>
             </div>
           </div>
         </div>

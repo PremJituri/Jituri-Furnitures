@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { UserRound } from 'lucide-react';
+import {
+  Activity,
+  Component,
+  HomeIcon,
+  MapPin,
+  Package,
+  UserRound,
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { AppleStyleDock } from './AppleStyleDock.jsx';
 
@@ -107,43 +114,51 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="mt-4 border-t border-[#D3E2F0] pt-4 md:hidden flex flex-col gap-3">
+          <div className="mt-4 border-t border-[#D3E2F0] pt-4 md:hidden flex flex-col gap-2">
             <NavLink
               to="/"
               end
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium text-[#0B1B2B] py-1"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="flex items-center gap-3 rounded-[2px] px-2.5 py-2 text-sm font-medium text-[#0B1B2B] hover:bg-[#EEF5FC] transition-colors"
             >
-              Home
-            </NavLink>
-            <NavLink
-              to="/collections"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium text-[#0B1B2B] py-1"
-            >
-              Collections
+              <HomeIcon className="h-4 w-4 text-[#0B1B2B]" />
+              <span>Home</span>
             </NavLink>
             <button
               type="button"
               onClick={() => scrollToSection('legacy')}
-              className="text-left text-sm font-medium text-[#0B1B2B] py-1"
+              className="flex items-center gap-3 rounded-[2px] px-2.5 py-2 text-left text-sm font-medium text-[#0B1B2B] hover:bg-[#EEF5FC] transition-colors"
             >
-              Heritage & Craft
+              <Component className="h-4 w-4 text-[#0B1B2B]" />
+              <span>Components</span>
             </button>
             <button
               type="button"
               onClick={() => scrollToSection('process')}
-              className="text-left text-sm font-medium text-[#0B1B2B] py-1"
+              className="flex items-center gap-3 rounded-[2px] px-2.5 py-2 text-left text-sm font-medium text-[#0B1B2B] hover:bg-[#EEF5FC] transition-colors"
             >
-              6-Step Process
+              <Activity className="h-4 w-4 text-[#0B1B2B]" />
+              <span>Activity</span>
             </button>
             <button
               type="button"
               onClick={() => scrollToSection('contact')}
-              className="text-left text-sm font-medium text-[#0B1B2B] py-1"
+              className="flex items-center gap-3 rounded-[2px] px-2.5 py-2 text-left text-sm font-medium text-[#0B1B2B] hover:bg-[#EEF5FC] transition-colors"
             >
-              Visit & Contact
+              <MapPin className="h-4 w-4 text-[#0B1B2B]" />
+              <span>Contact</span>
             </button>
+            <NavLink
+              to="/collections"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-3 rounded-[2px] px-2.5 py-2 text-sm font-medium text-[#0B1B2B] hover:bg-[#EEF5FC] transition-colors"
+            >
+              <Package className="h-4 w-4 text-[#0B1B2B]" />
+              <span>Products</span>
+            </NavLink>
             <div className="border-t border-[#D3E2F0] pt-3 flex flex-col gap-2">
               {user ? (
                 <>
